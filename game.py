@@ -6,15 +6,20 @@ from grid import Grid
 
 class Game():
 
-	def __init__(self):
+	def __init__(self) -> None:
 		pygame.init()
 		self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+		pygame.display.set_caption("Conwa's Game of Life")
 		self.clock = pygame.time.Clock()
 		self.grid = Grid()
 		self.started = False
 
+
+	def __call__(self) -> None:
+		self.run()
+
 	# Main game loop
-	def run(self):
+	def run(self) -> None:
 		while True:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
@@ -27,7 +32,7 @@ class Game():
 						self.grid.reset()
 
 				if not self.started:
-					if event.type == pygame.MOUSEBUTTONUP:
+					if event.type == pygame.MOUSEBUTTONDOWN:
 						pos = pygame.mouse.get_pos()
 						self.grid.check_click(pos)
 
@@ -37,11 +42,4 @@ class Game():
 			self.grid.draw()
 			pygame.display.update()
 			
-			self.clock.tick(FPS)					
-
-
-
-# Running the game
-if __name__ == "__main__":
-	game_of_life = Game()
-	game_of_life.run()
+			self.clock.tick(FPS)
